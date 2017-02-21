@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="multi-select-dropdown-styles.css" />
+    <script src="multi-select-dropdown-app.js"></script>
+  </head>
+  
+  <body >
+    
+    <div ng-app="wrapupApp" ng-controller="wrapupCtrl">
+
+      <button class="btn btn-default" type="button" ng-click="toggleDropdown()"> Wrapup-Reason ( {{selectedReasons.length}} )</button>
+      <div ng-show="showPopover" >
+        <input type="text" ng-model="filter_categories_subcategories" ng-model-options="{debounce: 500}">
+        <ul>
+            <li class="wrapup-category" ng-repeat="category in categories | filter: displayCategory">
+                <b> {{ category.name }} </b>
+                <ul>
+                    <li class="wrapup-reason" ng-repeat="subcategory in category.subcategories | filter:displaySubcategory" ng-click="selectedReason(subcategory)"
+                    ng-class="{ok : isSelectedItem(subcategory) }">
+                       {{ subcategory.name }}
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div ng-show="selectedReasons.length < 5 "> Maximum of 5 reasons can be selected </div>
+        <div ng-show="selectedReasons.length == 5 "> Maximum limit reached! Remove selections to add other reasons. </div>
+        <ul> 
+          <li class="tag-item" ng-repeat="reason in selectedReasons">
+            <span class="remove-button" ng-click="removeTag(reason)">{{reason.name}} </span>
+          </li> 
+        </ul>
+
+      </div>
+
+    </div>
+
+
+  </body>
+
+</html>
